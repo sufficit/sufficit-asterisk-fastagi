@@ -1,17 +1,14 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AsterNET.FastAGI.MappingStrategies;
 using AsterNET.IO;
-using AsterNET.Util;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Sufficit.Asterisk;
 using Sufficit.Asterisk.FastAGI;
 using Sufficit.Asterisk.IO;
 
@@ -68,7 +65,7 @@ namespace AsterNET.FastAGI
         private ValueTask OnRequest(ISocketConnection e, CancellationToken cancellationToken)
         {
             _logger.LogDebug("received connection");
-            var connectionHandler = new AGIConnectionHandler(_loggerFactory, e, Strategy, _options.SC511_CAUSES_EXCEPTION, _options.SCHANGUP_CAUSES_EXCEPTION);
+            var connectionHandler = new AGIConnectionHandler(_loggerFactory, e, Strategy, _options.SC511_CAUSES_EXCEPTION);
             return connectionHandler.Run(cancellationToken);
         }
 
@@ -98,7 +95,7 @@ namespace AsterNET.FastAGI
                //pool.Shutdown();
                 _logger.LogInformation("AGI Server shut down.");
 
-                throw ex;
+                throw;
             }
 
             try

@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using AsterNET.FastAGI.Command;
@@ -24,9 +23,8 @@ namespace AsterNET.FastAGI
         private readonly ILogger _logger;
         private readonly IMappingStrategy mappingStrategy;
         private readonly bool _SC511_CAUSES_EXCEPTION;
-        private readonly bool _SCHANGUP_CAUSES_EXCEPTION;
 
-        private ISocketConnection? _socket;
+        private readonly ISocketConnection _socket;
 
         #region AGIConnectionHandler(socket, mappingStrategy)
 
@@ -35,7 +33,7 @@ namespace AsterNET.FastAGI
         /// </summary>
         /// <param name="socket">the socket connection to handle.</param>
         /// <param name="mappingStrategy">the strategy to use to determine which script to run.</param>
-        public AGIConnectionHandler(ILoggerFactory loggerFactory, ISocketConnection socket, IMappingStrategy mappingStrategy, bool SC511_CAUSES_EXCEPTION, bool SCHANGUP_CAUSES_EXCEPTION)
+        public AGIConnectionHandler(ILoggerFactory loggerFactory, ISocketConnection socket, IMappingStrategy mappingStrategy, bool SC511_CAUSES_EXCEPTION)
         {
             this.loggerFactory = loggerFactory;
             
@@ -45,7 +43,6 @@ namespace AsterNET.FastAGI
 
             this.mappingStrategy = mappingStrategy;
             _SC511_CAUSES_EXCEPTION = SC511_CAUSES_EXCEPTION;
-            _SCHANGUP_CAUSES_EXCEPTION = SCHANGUP_CAUSES_EXCEPTION;
 
             _logger = loggerFactory.CreateLogger<AGIConnectionHandler>();            
         }
@@ -67,7 +64,6 @@ namespace AsterNET.FastAGI
             {
                 _socket.OnDisposing -= OnSocketDisposing;
                 _socket.OnDisconnected -= OnSocketDisconnected;
-                _socket = null;
             }
         }
 
@@ -90,26 +86,24 @@ namespace AsterNET.FastAGI
                     // eg. telnet to the service 
                     if (request.Request.Count > 0)
                     {
-                        using (var script = mappingStrategy.DetermineScript(request))
+                        using var script = mappingStrategy.DetermineScript(request);
+                        if (script != null)
                         {
-                            if (script != null)
-                            {
-                                var loggerChannel = loggerFactory.CreateLogger<AGIChannel>();
-                                var channel = new AGIChannel(loggerChannel, _socket, _SC511_CAUSES_EXCEPTION, _SCHANGUP_CAUSES_EXCEPTION);
+                            var loggerChannel = loggerFactory.CreateLogger<AGIChannel>();
+                            var channel = new AGIChannel(loggerChannel, _socket, _SC511_CAUSES_EXCEPTION);
 
-                                _logger.LogTrace("Begin AGIScript " + script.GetType().FullName + " on " + Thread.CurrentThread.Name);
+                            _logger.LogTrace("Begin AGIScript " + script.GetType().FullName + " on " + Thread.CurrentThread.Name);
 
-                                var parameters = new AGIScriptParameters(request, channel);
-                                await script.ExecuteAsync(parameters, cancellationToken);
-                                statusMessage = "SUCCESS";
+                            var parameters = new AGIScriptParameters(request, channel);
+                            await script.ExecuteAsync(parameters, cancellationToken);
+                            statusMessage = "SUCCESS";
 
-                                _logger.LogTrace("End AGIScript " + script.GetType().FullName + " on " + Thread.CurrentThread.Name);
-                            }
-                            else
-                            {
-                                statusMessage = "No script configured for URL '" + request.RequestURL + "' (script '" + request.Script + "')";
-                                throw new FileNotFoundException(statusMessage);
-                            }
+                            _logger.LogTrace("End AGIScript " + script.GetType().FullName + " on " + Thread.CurrentThread.Name);
+                        }
+                        else
+                        {
+                            statusMessage = "No script configured for URL '" + request.RequestURL + "' (script '" + request.Script + "')";
+                            throw new FileNotFoundException(statusMessage);
                         }
                     }
                     else
@@ -162,14 +156,15 @@ namespace AsterNET.FastAGI
                 {
                     try
                     {
-                        using (_socket)
+                        // avoid disposing socket because it was not created by this handler
+                        // using (_socket)
                         {
                             if (_socket.IsConnected)
                             {
-                                if (!string.IsNullOrWhiteSpace(statusMessage))
+                                if (!string.IsNullOrWhiteSpace(statusMessage) && !cancellationToken.IsCancellationRequested)
                                 {
                                     var command = new SetVariableCommand(Common.AGI_DEFAULT_RETURN_STATUS, statusMessage);
-                                    _socket.SendCommand(command);
+                                    await _socket.SendCommandAsync(command, cancellationToken);
                                 }
                             }
                         }

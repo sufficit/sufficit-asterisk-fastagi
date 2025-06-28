@@ -24,9 +24,8 @@ namespace AsterNET.FastAGI
 
         private readonly ILogger _logger;
         private readonly bool _SC511_CAUSES_EXCEPTION;
-        private readonly bool _SCHANGUP_CAUSES_EXCEPTION;
 
-        public AGIChannel(ILogger<AGIChannel> logger, ISocketConnection socket, bool SC511_CAUSES_EXCEPTION, bool SCHANGUP_CAUSES_EXCEPTION)
+        public AGIChannel(ILogger<AGIChannel> logger, ISocketConnection socket, bool SC511_CAUSES_EXCEPTION)
         {
             _logger = logger;
             _logger.BeginScope(this);
@@ -35,11 +34,10 @@ namespace AsterNET.FastAGI
             _logger.LogTrace("agi channel socket id: {id}", socket.Handle);
 
             _SC511_CAUSES_EXCEPTION = SC511_CAUSES_EXCEPTION;
-            _SCHANGUP_CAUSES_EXCEPTION = SCHANGUP_CAUSES_EXCEPTION;
         }
 
-        public AGIChannel(ISocketConnection socket, bool SC511_CAUSES_EXCEPTION, bool SCHANGUP_CAUSES_EXCEPTION)
-            : this(new LoggerFactory().CreateLogger<AGIChannel>(), socket, SC511_CAUSES_EXCEPTION, SCHANGUP_CAUSES_EXCEPTION)
+        public AGIChannel(ISocketConnection socket, bool SC511_CAUSES_EXCEPTION)
+            : this(new LoggerFactory().CreateLogger<AGIChannel>(), socket, SC511_CAUSES_EXCEPTION)
         {
             
         }
