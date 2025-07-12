@@ -1,6 +1,6 @@
 using System;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     public interface IMappingStrategy
     {

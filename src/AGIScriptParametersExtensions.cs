@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     public static class AGIScriptParametersExtensions
     {

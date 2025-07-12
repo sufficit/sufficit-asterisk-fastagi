@@ -5,7 +5,7 @@ using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
-namespace AsterNET.FastAGI.MappingStrategies
+namespace Sufficit.Asterisk.FastAGI.MappingStrategies
 {
 
     internal class MappingAssembly

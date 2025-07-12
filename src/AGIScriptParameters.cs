@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     /// <summary>
     ///     AGI Script parameters, enclosure for <see cref="AGIRequest"/> and <see cref="AGIChannel"/> <br/>

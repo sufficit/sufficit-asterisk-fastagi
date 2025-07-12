@@ -1,10 +1,12 @@
-namespace AsterNET.FastAGI.Command
+using System;
+
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Waits up to 'timeout' milliseconds for channel to receive a DTMF digit.<br/>
 	/// Returns -1 on channel failure, 0 if no digit is received in the timeout, or
-	/// the numerical value of the ascii of the digit if one is received. Use -1 for
-	/// the timeout value if you desire the call to block indefinitely.
+	/// the numerical value of the ascii of the digit if one is received. Use -1
+	/// for the timeout value if you desire the call to block indefinitely.
 	/// </summary>
 	public class WaitForDigitCommand : AGICommand
 	{

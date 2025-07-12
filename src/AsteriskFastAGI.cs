@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AsterNET.FastAGI.MappingStrategies;
+using Sufficit.Asterisk.FastAGI.MappingStrategies;
 using AsterNET.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 using Sufficit.Asterisk.FastAGI;
 using Sufficit.Asterisk.IO;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     public class AsteriskFastAGI
     {

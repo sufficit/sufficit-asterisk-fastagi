@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Must be with $, prefer ${var} notation <br />

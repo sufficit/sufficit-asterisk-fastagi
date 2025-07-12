@@ -1,5 +1,7 @@
 using System;
-namespace AsterNET.FastAGI.Command
+using System.Text;
+
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 
     /// <summary>

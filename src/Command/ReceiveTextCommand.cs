@@ -1,4 +1,4 @@
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Receives a string of text on a channel.<br/>

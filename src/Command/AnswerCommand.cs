@@ -1,5 +1,6 @@
 using System;
-namespace AsterNET.FastAGI.Command
+
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	public class AnswerCommand : AGICommand
 	{

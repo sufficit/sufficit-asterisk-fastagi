@@ -1,5 +1,5 @@
 using System;
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Say a given time, returning early if any of the given DTMF digits are received on the channel.<br/>

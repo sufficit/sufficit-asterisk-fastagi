@@ -1,5 +1,5 @@
 using System;
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Sends the given text on a channel.<br/>

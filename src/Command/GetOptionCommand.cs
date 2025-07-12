@@ -1,5 +1,5 @@
 using System;
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Plays the given file, and waits for the user to press one of the given
@@ -11,7 +11,7 @@ namespace AsterNET.FastAGI.Command
 	/// <br/>
 	/// Remember, the file extension must not be included in the filename.
 	/// </summary>
-	/// <seealso cref="FastAGI.Command.StreamFileCommand" />
+	/// <seealso cref="StreamFileCommand" />
 	public class GetOptionCommand : AGICommand
 	{
 		/// <summary> The name of the file to stream.</summary>

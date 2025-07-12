@@ -1,5 +1,5 @@
-﻿using AsterNET.FastAGI.Command;
-using AsterNET.FastAGI;
+﻿using Sufficit.Asterisk.FastAGI.Command;
+using Sufficit.Asterisk.FastAGI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using Sufficit.Asterisk.IO;
 
-namespace AsterNET.IO
+namespace Sufficit.Asterisk.IO
 {
     public static class ISocketConnectionReaderExtensions
     {

@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Collections;
-using AsterNET.FastAGI;
+using Sufficit.Asterisk.FastAGI;
 using System.Collections.Generic;
 
-namespace AsterNET.Util
+namespace Sufficit.Asterisk.Util
 {
 	/// <summary>
 	/// A fixed sized thread pool.

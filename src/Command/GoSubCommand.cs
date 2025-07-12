@@ -1,5 +1,5 @@
 using System;
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
     /// <summary>
     /// Cause the channel to execute the specified dialplan subroutine. <br/>

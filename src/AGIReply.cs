@@ -1,5 +1,3 @@
-using AsterNET.Helpers;
-using Sufficit.Asterisk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
 
     #region Enum - AGIReplyStatuses 
@@ -50,7 +48,7 @@ namespace AsterNET.FastAGI
     /// </summary>
     public class AGIReply
     {
-        private static CultureInfo CultureInfo => Defaults.CultureInfo;
+        private static CultureInfo CultureInfo => CultureInfo.InvariantCulture;
 
         #region Variables
 

@@ -1,12 +1,12 @@
-﻿using AsterNET.FastAGI.Command;
-using AsterNET.FastAGI;
+﻿using Sufficit.Asterisk.FastAGI.Command;
+using Sufficit.Asterisk.FastAGI;
 using System;
 using System.IO;
 using Sufficit.Asterisk.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AsterNET.IO
+namespace Sufficit.Asterisk.IO
 {
     public static class ISocketConnectionWriterExtensions
     {

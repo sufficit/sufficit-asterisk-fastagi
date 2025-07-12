@@ -3,13 +3,13 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using AsterNET.FastAGI.Command;
+using Sufficit.Asterisk.FastAGI.Command;
 using AsterNET.IO;
 using Microsoft.Extensions.Logging;
 using Sufficit.Asterisk;
 using Sufficit.Asterisk.IO;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     /// <summary>
     ///     An AGIConnectionHandler is created and run by the AGIServer whenever a new

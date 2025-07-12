@@ -2,7 +2,7 @@ using Sufficit.Asterisk;
 using System;
 using System.Threading;
 
-namespace AsterNET.FastAGI.Command
+namespace Sufficit.Asterisk.FastAGI.Command
 {
 	/// <summary>
 	/// Stream the given file, and recieve DTMF data. The user may interrupt the streaming by starting to enter digits.<br/>

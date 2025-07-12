@@ -4,7 +4,7 @@ using System.Resources;
 using System.Reflection;
 using Sufficit.Asterisk;
 
-namespace AsterNET.FastAGI.MappingStrategies
+namespace Sufficit.Asterisk.FastAGI.MappingStrategies
 {
 	/// <summary>
 	/// A MappingStrategy that is configured via a resource bundle.<br/>

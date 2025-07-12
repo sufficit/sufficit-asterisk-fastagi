@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
-using AsterNET.FastAGI;
+using Sufficit.Asterisk.FastAGI;
 
-namespace AsterNET.Util
+namespace Sufficit.Asterisk.Util
 {
 	/// <summary>
 	/// A TaskThread sits in a loop, asking the pool for a job, and servicing it.

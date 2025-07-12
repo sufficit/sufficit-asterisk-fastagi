@@ -1,6 +1,4 @@
 using AsterNET.Helpers;
-using Sufficit.Asterisk;
-using Sufficit.Asterisk.Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +8,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using static Sufficit.Asterisk.Common;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     /// <summary>
     ///     Default implementation of the AGIRequest interface.

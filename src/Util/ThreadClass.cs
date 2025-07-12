@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AsterNET.Util
+namespace Sufficit.Asterisk.Util
 {
 	/// <summary>
 	/// Support class used to handle threads

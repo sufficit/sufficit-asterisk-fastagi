@@ -1,4 +1,4 @@
-using AsterNET.FastAGI.Command;
+using Sufficit.Asterisk.FastAGI.Command;
 using AsterNET.IO;
 using Microsoft.Extensions.Logging;
 using Sufficit.Asterisk;
@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Xml.Linq;
 using static Sufficit.Asterisk.Common;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
     /// <summary>
     ///     Default implementation of the AGIChannel interface.

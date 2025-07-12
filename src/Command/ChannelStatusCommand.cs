@@ -1,5 +1,6 @@
 using System;
-namespace AsterNET.FastAGI.Command
+
+namespace Sufficit.Asterisk.FastAGI.Command
 {
     /// <summary>
     /// Returns the status of the specified channel.

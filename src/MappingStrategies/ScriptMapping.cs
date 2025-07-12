@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace AsterNET.FastAGI.MappingStrategies
+namespace Sufficit.Asterisk.FastAGI.MappingStrategies
 {
 
     public class ScriptMapping

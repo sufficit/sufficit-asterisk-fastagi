@@ -1,9 +1,8 @@
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AsterNET.FastAGI
+namespace Sufficit.Asterisk.FastAGI
 {
 	/// <summary>
 	/// The BaseAGIScript provides some convinience methods to make it easier to
