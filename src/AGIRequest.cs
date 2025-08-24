@@ -1,4 +1,3 @@
-using AsterNET.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -494,7 +493,7 @@ namespace Sufficit.Asterisk.FastAGI
         #region ParameterValues(string name) 
 
         /// <summary>
-        /// Consulta a matrix de parametros (não gera excessão)
+        /// Consulta a matrix de parametros (nï¿½o gera excessï¿½o)
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -516,15 +515,6 @@ namespace Sufficit.Asterisk.FastAGI
             if (parameterMap == null)
                 parameterMap = parseParameters(parameters);
             return parameterMap;
-        }
-
-        #endregion
-
-        #region ToString() 
-
-        public override string ToString()
-        {
-            return Helper.ToString(this);
         }
 
         #endregion

@@ -29,9 +29,6 @@ namespace Sufficit.Asterisk.FastAGI
         /// </summary>
         public IMappingStrategy Strategy { get; }
 
-        /// <summary> True while this server is shut down. </summary>
-        private bool stopped;
-
         private Encoding socketEncoding = Encoding.ASCII;
 
         public Encoding SocketEncoding
@@ -74,7 +71,6 @@ namespace Sufficit.Asterisk.FastAGI
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            stopped = false;
             Strategy.Load();
 
             try
@@ -119,7 +115,6 @@ namespace Sufficit.Asterisk.FastAGI
 
         public void Stop()
         {
-            stopped = true;
             _socketHandler.Stop();
         }
 

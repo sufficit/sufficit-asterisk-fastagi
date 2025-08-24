@@ -1,5 +1,4 @@
 using System.Text;
-using AsterNET.Helpers;
 
 namespace Sufficit.Asterisk.FastAGI.Command
 {
@@ -21,11 +20,6 @@ namespace Sufficit.Asterisk.FastAGI.Command
 			tmp = tmp.Replace("\\\"", "\\\\\"");		// escape quotes
 			tmp = tmp.Replace("\\\n", "");				// filter newline
 			return "\"" + tmp + "\"";					// add quotes
-		}
-
-		public override string ToString()
-		{
-			return Helper.ToString(this);
 		}
 	}
 }
