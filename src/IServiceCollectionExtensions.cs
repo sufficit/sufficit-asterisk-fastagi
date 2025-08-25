@@ -13,7 +13,7 @@ namespace Sufficit.Asterisk.FastAGI
     {
         public static IServiceCollection AddAsteriskFastAGI(this IServiceCollection services)
         {
-            var provider = services.BuildServiceProvider();
+            var provider = services.BuildServiceProvider(false);
             var configuration = provider.GetRequiredService<IConfiguration>();
             return services.AddAsteriskFastAGI(configuration);
         }
