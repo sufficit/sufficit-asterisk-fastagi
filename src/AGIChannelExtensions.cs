@@ -439,7 +439,7 @@ namespace Sufficit.Asterisk.FastAGI
 			return lastReply.Extra;
 		}
 
-        public static T GetVariable<T>(this AGIChannel source, string name, T value = default, IFormatProvider? provider = null) where T : struct
+        public static T GetVariable<T>(this AGIChannel source, string name, T value = default, IFormatProvider? _ = null) where T : struct
         {
             var asteriskvar = source.GetVariable(name);
             if (string.IsNullOrWhiteSpace(asteriskvar)) return default;
@@ -448,11 +448,11 @@ namespace Sufficit.Asterisk.FastAGI
 
             var converter = TypeDescriptor.GetConverter(type);
             if (converter.CanConvertFrom(typeof(string)))            
-                return (T)(converter.ConvertFromString(asteriskvar) ?? default);
+                return (T)(converter.ConvertFromString(asteriskvar) ?? value);
             //else if(type is IConvertible)
             //    return (T)Convert.ChangeType(asteriskvar, type, provider);
             else if (type == typeof(Guid))
-                return (T)(object) new Guid(asteriskvar);
+                return (T)(object)new Guid(asteriskvar);
 
             throw new Exception($"unhandled type for conversion, var: {name}, type: {type}, value: {asteriskvar}, converter: {converter}");
         }
