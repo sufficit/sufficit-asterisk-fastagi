@@ -26,7 +26,7 @@ namespace Sufficit.Asterisk.FastAGI
         ///     You should prefer to override <see cref="AGIScript.ExecuteAsync(AGIScriptParameters, CancellationToken)"/>
         /// </summary>
         public virtual async ValueTask ExecuteAsync(AGIRequest request, AGIChannel channel, CancellationToken cancellationToken)
-            => await Task.Run(() => Execute(request, channel));
+            => await Task.Run(() => Execute(request, channel), cancellationToken);
 
         /// <summary>
         ///     Default sincronous executing starting point
