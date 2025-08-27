@@ -143,6 +143,41 @@ namespace Sufficit.Asterisk.FastAGI
 		}
 
         #endregion
+        #region GetDigits(string file?, int? timeout, int? maxDigits, uint? readtime)
+
+        /// <summary>
+        /// Plays the given file and waits for the user to enter DTMF digits until the timeout occurs or the maximum number of digits has been entered.
+        /// Ensures the return value is never null, using '?' to indicate a timeout, and handles hangup or error conditions.
+        /// </summary>
+        /// <param name="source">The AGIChannel instance used to interact with the Asterisk channel.</param>
+        /// <param name="file">The name of the file to play.</param>
+        /// <param name="timeout">The timeout in milliseconds to wait for user input.<br/>
+        /// 0 means standard timeout value, -1 means "ludicrous time" (essentially never times out).</param>
+        /// <param name="maxDigits">The maximum number of digits the user is allowed to enter.</param>
+        /// <param name="readtime">The maximum time to wait for a response, in milliseconds.</param>
+        /// <returns>A char array containing the DTMF digits entered by the user, '?' if a timeout occurs, or '!' if a hangup/error occurs.</returns>
+        public static char[] GetDigits(this AGIChannel source, string? file = null, int? timeout = null, int? maxDigits = null, uint? readtime = 60000)
+        {
+            var lastReply = source.SendCommand(new GetDataCommand(file, timeout, maxDigits) { ReadTimeOut = readtime });
+            string result = lastReply.GetResult();
+
+            if (string.IsNullOrWhiteSpace(result) || result.Contains("(timeout)"))
+            {
+                // Timeout occurred
+                return new char[] { '?' };
+            }
+
+            if (result == "-1")
+            {
+                // Hangup or error occurred
+                return new char[] { '!' };
+            }
+
+            // Successful input
+            return result.ToCharArray();
+        }
+
+        #endregion
         #region GetOption(string file, string escapeDigits)
 
         /// <summary>
@@ -480,8 +515,16 @@ namespace Sufficit.Asterisk.FastAGI
             => source.SetVariable(name, val.ToString().ToLower());
 
         #endregion
-        #region GoSub(context, extension, priority, args
+        #region GoSub(this AGIChannel source, string context, string extension, string priority, string? args = null)
 
+        /// <summary>
+        /// Invoke a subroutine in Asterisk.
+        /// </summary>
+        /// <param name="source">The AGI channel instance.</param>
+        /// <param name="context">The context where the subroutine is located.</param>
+        /// <param name="extension">The extension to execute.</param>
+        /// <param name="priority">The priority to start with.</param>
+        /// <param name="args">Optional arguments to pass to the subroutine.</param>
         public static void GoSub(this AGIChannel source, string context, string extension, string priority, string? args = null)
             => source.SendCommand(new GoSubCommand(context, extension, priority, args));
 
@@ -835,6 +878,6 @@ namespace Sufficit.Asterisk.FastAGI
 			var lastReply = source.SendCommand(new ControlStreamFileCommand(file, escapeDigits, offset, forwardDigit, rewindDigit, pauseDigit));
 			return lastReply.ResultCode;
 		}
-		#endregion
+		#endregion        
 	}
 }

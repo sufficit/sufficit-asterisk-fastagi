@@ -1,6 +1,4 @@
-using Sufficit.Asterisk;
 using System;
-using System.Threading;
 
 namespace Sufficit.Asterisk.FastAGI.Command
 {
@@ -14,9 +12,12 @@ namespace Sufficit.Asterisk.FastAGI.Command
         /// <summary> The name of the file to stream. Must not include extension.</summary>
         public string? File { get; set; }
 
-        /// <summary>
-        /// Get/Set the timeout in milliseconds to wait for data. 0 means standard timeout value, -1 means "ludicrous time" (essentially never times out). <br />
-        /// *this timeout is used in silence, only if the user stops to enter, every entry restarts the count
+        ///  <summary>
+        ///     <para> Get/Set the timeout in milliseconds to wait for data. </para>
+        ///     <para> - A value of 0 uses the standard timeout value defined by the Asterisk server configuration. </para>
+        ///     <para> - A value of -1 means "ludicrous time", which effectively disables the timeout (waits indefinitely). </para>
+        ///     <para> - The timeout is applied only during periods of silence; each user input resets the timeout countdown. </para>
+        ///     <para> - If MaxDigits is specified, the timeout is only applied if fewer than the maximum number of digits have been entered. </para>
         /// </summary>
         public int? Timeout { get; set; }
 
