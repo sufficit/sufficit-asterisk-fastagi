@@ -6,7 +6,7 @@ using Sufficit.Asterisk.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sufficit.Asterisk.IO
+namespace Sufficit.Asterisk.FastAGI.IO
 {
     public static class ISocketConnectionWriterExtensions
     {

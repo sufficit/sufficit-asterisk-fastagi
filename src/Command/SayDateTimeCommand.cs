@@ -13,8 +13,8 @@ namespace Sufficit.Asterisk.FastAGI.Command
 
 		private long time;
 		private string? escapeDigits;
-		private string format;
-		private string timezone;
+		private string? format;
+		private string? timezone;
 
 		/// <summary>
 		/// Creates a new SayDateTimeCommand that says the given time.
@@ -79,7 +79,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary>
 		/// Get/Set the digits that allow the user to interrupt this command.
 		/// </summary>
-		public string getEscapeDigits
+		public string? getEscapeDigits
 		{
 			get { return this.escapeDigits; }
 			set { this.escapeDigits = value; }
@@ -88,7 +88,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary>
 		/// Get/Set the format the time should be said in.
 		/// </summary>
-		public string Format
+		public string? Format
 		{
 			get { return this.format; }
 			set { this.format = value; }
@@ -97,7 +97,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary>
 		/// Get/Set the timezone to use when saying the time.
 		/// </summary>
-		public string Timezone
+		public string? Timezone
 		{
 			get { return this.timezone; }
 			set { this.timezone = value; }

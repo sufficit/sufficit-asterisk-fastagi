@@ -1,5 +1,5 @@
 using Sufficit.Asterisk.FastAGI.Command;
-using AsterNET.IO;
+using Sufficit.Asterisk.FastAGI.IO;
 using Microsoft.Extensions.Logging;
 using Sufficit.Asterisk.IO;
 using System;

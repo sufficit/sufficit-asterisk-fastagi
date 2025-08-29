@@ -66,14 +66,17 @@ namespace Sufficit.Asterisk.Util
 						if (jobs.Count == 0)
 							Monitor.Wait(jobs);
 					}
+#if LOGGER
 					catch (ThreadInterruptedException ex)
 					{
-#if LOGGER
 						logger.Error("System.Threading.ThreadInterruptedException.", ex);
-#else
-						throw ex;
-#endif
 					}
+#else
+					catch {
+						throw;
+					}
+#endif
+
 					if (jobs.Count > 0)
 					{
 						job = jobs[0];

@@ -12,7 +12,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary> The digits string to say.</summary>
 		private string digits;
 		/// <summary> When one of these digits is pressed while saying the digits the command returns.</summary>
-		private string escapeDigits;
+		private string? escapeDigits;
 		#endregion
 
 		#region Digits
@@ -29,7 +29,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary>
 		/// Get/Set the digits that allow the user to interrupt this command.
 		/// </summary>
-		public string EscapeDigits
+		public string? EscapeDigits
 		{
 			get { return escapeDigits; }
 			set { this.escapeDigits = value; }

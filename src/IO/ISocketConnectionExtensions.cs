@@ -10,20 +10,63 @@ using System.Linq;
 using System.Threading;
 using Sufficit.Asterisk.IO;
 
-namespace Sufficit.Asterisk.IO
+namespace Sufficit.Asterisk.FastAGI.IO
 {
     public static class ISocketConnectionReaderExtensions
     {
-        public static async Task<AGIRequest> GetRequest(this ISocketConnection socket, CancellationToken cancellationToken)
+        public static async Task<AGIRequest?> GetRequest(this ISocketConnection socket, CancellationToken cancellationToken)
         {
-            var requestLines = await socket.ReadRequest(cancellationToken).ToArrayAsync();
-            return new AGIRequest(requestLines)
+            try
             {
-                LocalAddress = socket.LocalAddress,
-                LocalPort = socket.LocalPort,
-                RemoteAddress = socket.RemoteAddress,
-                RemotePort = socket.RemotePort
-            };
+                // Convert IAsyncEnumerable to array with proper error handling
+                var requestLinesList = new List<string>();
+                await foreach (var line in socket.ReadRequest(cancellationToken))
+                {
+                    requestLinesList.Add(line);
+                }
+                var requestLines = requestLinesList.ToArray();
+                
+                // Validate request lines before creating AGIRequest
+                if (requestLines == null || requestLines.Length == 0)
+                {
+                    // Log connection details for debugging
+                    var remoteEndpoint = socket.RemoteAddress != null ? $"{socket.RemoteAddress}:{socket.RemotePort}" : "unknown";
+                    var localEndpoint = socket.LocalAddress != null ? $"{socket.LocalAddress}:{socket.LocalPort}" : "unknown";
+                    
+                    // This helps identify if it's a telnet connection, abandoned call, or network issue
+                    System.Diagnostics.Debug.WriteLine($"Empty AGI environment received from {remoteEndpoint} to {localEndpoint} - possible telnet connection or abandoned call");
+                    
+                    // Return null for empty requests (e.g., telnet connections, abandoned calls)
+                    return null;
+                }
+
+                return new AGIRequest(requestLines)
+                {
+                    LocalAddress = socket.LocalAddress,
+                    LocalPort = socket.LocalPort,
+                    RemoteAddress = socket.RemoteAddress,
+                    RemotePort = socket.RemotePort
+                };
+            }
+            catch (ArgumentException ex)
+            {
+                // Log more details about the invalid environment for debugging
+                var remoteEndpoint = socket.RemoteAddress != null ? $"{socket.RemoteAddress}:{socket.RemotePort}" : "unknown";
+                System.Diagnostics.Debug.WriteLine($"Invalid AGI environment from {remoteEndpoint}: {ex.Message}");
+                
+                // Invalid AGI request - environment data is null or empty
+                return null;
+            }
+            catch (IOException ex) when (ex.InnerException is SocketException socketEx && socketEx.SocketErrorCode == SocketError.ConnectionReset)
+            {
+                // Connection reset by peer - normal during service restarts
+                return null;
+            }
+            catch (SocketException ex) when (ex.SocketErrorCode == SocketError.ConnectionReset)
+            {
+                // Connection reset by peer - normal during service restarts
+                return null;
+            }
         }
 
         /// <summary>

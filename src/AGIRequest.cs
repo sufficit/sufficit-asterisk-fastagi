@@ -21,14 +21,14 @@ namespace Sufficit.Asterisk.FastAGI
 #if LOGGER
         private Logger logger = Logger.Instance();
 #endif
-        private string rawCallerId;
+        private string? rawCallerId;
         private readonly Dictionary<string, string> request;
 
         /// <summary> A map assigning the values of a parameter (an array of Strings) to the name of the parameter.</summary>
-        private Dictionary<string, List<string>> parameterMap;
+        private Dictionary<string, List<string>>? parameterMap;
 
-        private string parameters;
-        private string script;
+        private string? parameters;
+        private string? script;
         private bool callerIdCreated;
 
         #endregion
@@ -123,7 +123,7 @@ namespace Sufficit.Asterisk.FastAGI
 
         #region CallerId 
 
-        public string CallerId
+        public string? CallerId
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Sufficit.Asterisk.FastAGI
 
         #region Arguments
 
-        private IEnumerable<string> _arguments;
+        private IEnumerable<string>? _arguments;
         private object _lockArguments = new object();
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Sufficit.Asterisk.FastAGI
             }
         }
 
-        public string Argument (int position)
+        public string? Argument (int position)
         {
             var args = Arguments;
             int count = args.Count();
@@ -199,7 +199,7 @@ namespace Sufficit.Asterisk.FastAGI
 
         #region CallerIdName 
 
-        public string CallerIdName
+        public string? CallerIdName
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Sufficit.Asterisk.FastAGI
 
         #region Asterisk 1.0 CallerID and CallerIdName 
 
-        private string callerId10()
+        private string? callerId10()
         {
             int lbPosition;
             int rbPosition;
@@ -246,7 +246,7 @@ namespace Sufficit.Asterisk.FastAGI
             return rawCallerId.Substring(lbPosition + 1, (rbPosition) - (lbPosition + 1));
         }
 
-        private string callerIdName10()
+        private string? callerIdName10()
         {
             int lbPosition;
             string callerIdName;
@@ -348,7 +348,7 @@ namespace Sufficit.Asterisk.FastAGI
 
         #region LocalAddress
 
-        public IPAddress LocalAddress { get; set; }
+        public IPAddress? LocalAddress { get; set; }
 
         #endregion
 
@@ -360,7 +360,7 @@ namespace Sufficit.Asterisk.FastAGI
 
         #region RemoteAddress
 
-        public IPAddress RemoteAddress { get; set; }
+        public IPAddress? RemoteAddress { get; set; }
 
         #endregion
 
@@ -375,7 +375,7 @@ namespace Sufficit.Asterisk.FastAGI
         /// <summary>
         ///     Returns the name of the script to execute.
         /// </summary>
-        public string Script
+        public string? Script
         {
             get
             {
@@ -501,7 +501,7 @@ namespace Sufficit.Asterisk.FastAGI
         {
             var result = new List<string>();
             if (ParameterMap().Any())
-                if(!string.IsNullOrWhiteSpace(name) && parameterMap.ContainsKey(name.ToLowerInvariant()))
+                if(!string.IsNullOrWhiteSpace(name) && parameterMap?.ContainsKey(name.ToLowerInvariant()) == true)
                     result = parameterMap[name.ToLowerInvariant()];
             return result;
         }
@@ -553,7 +553,7 @@ namespace Sufficit.Asterisk.FastAGI
         /// </summary>
         /// <param name="s">the parameter string to parse</param>
         /// <returns> a Map made up of parameter names their values</returns>
-        private static Dictionary<string, List<string>> parseParameters(string parameters)
+        private static Dictionary<string, List<string>> parseParameters(string? parameters)
         {
             var result = new Dictionary<string, List<string>>();
             string name;

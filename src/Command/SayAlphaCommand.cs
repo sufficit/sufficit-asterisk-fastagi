@@ -23,7 +23,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary>
 		/// Get/Set the digits that allow the user to interrupt this command.
 		/// </summary>
-		public string EscapeDigits
+		public string? EscapeDigits
 		{
 			get { return escapeDigits; }
 			set { this.escapeDigits = value; }

@@ -16,7 +16,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 	public class GetFullVariableCommand : AGICommand
 	{
 		private string varName;
-		private string channel;
+		private string? channel;
 
 		/// <summary>
 		/// Creates a new GetFullVariableCommand.
@@ -50,7 +50,7 @@ namespace Sufficit.Asterisk.FastAGI.Command
 		/// <summary>
 		/// Get/Set the name of the channel.
 		/// </summary>
-		public string Channel
+		public string? Channel
 		{
 			get { return channel; }
 			set { this.channel = value; }
