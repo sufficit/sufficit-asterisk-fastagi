@@ -56,7 +56,7 @@ namespace Sufficit.Asterisk.FastAGI
         private readonly string[] _lines;
 
         /// <summary>Additional attributes contained in this reply, for example endpos.</summary>
-        private Dictionary<string, string> attributes;
+        private Dictionary<string, string>? attributes;
 
         private bool attributesCreated;
 
@@ -65,7 +65,7 @@ namespace Sufficit.Asterisk.FastAGI
 
 
         /// <summary> The result, that is the part directly following the "result=" string.</summary>
-        private string result;
+        private string? result;
 
         private bool resultCreated;
 
@@ -75,12 +75,12 @@ namespace Sufficit.Asterisk.FastAGI
         private bool statusCreated;
 
         /// <summary> In case of status == 520 (invalid command syntax) this attribute contains the synopsis of the command.</summary>
-        private string synopsis;
+        private string? synopsis;
 
         private bool synopsisCreated;
 
         /// <summary> In case of status == 520 (invalid command syntax) this attribute contains the usage of the command.</summary>
-        private string usage;
+        private string? usage;
 
         #endregion
 
@@ -123,7 +123,7 @@ namespace Sufficit.Asterisk.FastAGI
         {
             get
             {
-                string result = GetResult();                
+                string? result = GetResult();
                 if (string.IsNullOrWhiteSpace(result))
                     return 0;
 
@@ -187,7 +187,7 @@ namespace Sufficit.Asterisk.FastAGI
         ///     Returns the result, that is the part directly following the "result=" string.
         /// </summary>
         /// <returns>the result.</returns>
-        public string GetResult()
+        public string? GetResult()
         {
             if (resultCreated)
                 return result;
@@ -282,7 +282,7 @@ namespace Sufficit.Asterisk.FastAGI
         ///     syntax (getStatus() == SC_INVALID_COMMAND_SYNTAX).
         /// </summary>
         /// <returns>the synopsis of the command sent, null if there were no syntax errors.</returns>
-        public string GetSynopsis()
+        public string? GetSynopsis()
         {
             if (GetStatus() != (int) AGIReplyStatuses.SC_INVALID_COMMAND_SYNTAX)
                 return null;
@@ -328,7 +328,7 @@ namespace Sufficit.Asterisk.FastAGI
         ///     the usage of the command sent,
         ///     null if there were no syntax errors.
         /// </returns>
-        public string GetUsage()
+        public string? GetUsage()
         {
             return usage;
         }
