@@ -4,9 +4,8 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Sufficit.Asterisk.FastAGI.Command;
-using AsterNET.IO;
+using Sufficit.Asterisk.FastAGI.IO;
 using Microsoft.Extensions.Logging;
-using Sufficit.Asterisk;
 using Sufficit.Asterisk.IO;
 
 namespace Sufficit.Asterisk.FastAGI
@@ -81,6 +80,13 @@ namespace Sufficit.Asterisk.FastAGI
                     }
 
                     var request = await _socket.GetRequest(cancellationToken);
+                    
+                    // Check if request is valid (null means invalid/empty request)
+                    if (request == null)
+                    {
+                        _logger.LogInformation("Received invalid or empty AGI request - connection may be from telnet or connection was reset");
+                        return;
+                    }
 
                     // Added check for when the request is empty
                     // eg. telnet to the service 
@@ -89,6 +95,8 @@ namespace Sufficit.Asterisk.FastAGI
                         using var script = mappingStrategy.DetermineScript(request);
                         if (script != null)
                         {
+                            // TODO: add to session monitor
+
                             var loggerChannel = loggerFactory.CreateLogger<AGIChannel>();
                             var channel = new AGIChannel(loggerChannel, _socket, _SC511_CAUSES_EXCEPTION);
 

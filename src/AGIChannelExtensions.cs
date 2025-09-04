@@ -136,7 +136,7 @@ namespace Sufficit.Asterisk.FastAGI
         /// <param name="maxDigits">the maximum number of digits the user is allowed to enter</param>
         /// <param name="readtime"><see cref="AGICommand.ReadTimeOut"/></param>
         /// <returns> a String containing the DTMF the user entered</returns>
-        public static string GetData(this AGIChannel source, string? file = null, int? timeout = null, int? maxDigits = null, uint? readtime = 60000)
+        public static string? GetData(this AGIChannel source, string? file = null, int? timeout = null, int? maxDigits = null, uint? readtime = 60000)
 		{
 			var lastReply = source.SendCommand(new GetDataCommand(file, timeout, maxDigits) { ReadTimeOut = readtime });
             return lastReply.GetResult();
@@ -159,20 +159,20 @@ namespace Sufficit.Asterisk.FastAGI
         public static char[] GetDigits(this AGIChannel source, string? file = null, int? timeout = null, int? maxDigits = null, uint? readtime = 60000)
         {
             var lastReply = source.SendCommand(new GetDataCommand(file, timeout, maxDigits) { ReadTimeOut = readtime });
-            string result = lastReply.GetResult();
+            string? result = lastReply.GetResult();
 
-            if (string.IsNullOrWhiteSpace(result) || result.Contains("(timeout)"))
-            {
-                // Timeout occurred
-                return new char[] { '?' };
-            }
-
-            if (result == "-1")
+            if (string.IsNullOrWhiteSpace(result) || result == "-1")
             {
                 // Hangup or error occurred
                 return new char[] { '!' };
             }
 
+            if (result.Contains("(timeout)"))
+            {
+                // Timeout occurred
+                return new char[] { '?' };
+            }
+            
             // Successful input
             return result.ToCharArray();
         }
