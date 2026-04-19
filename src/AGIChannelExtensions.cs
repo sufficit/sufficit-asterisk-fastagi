@@ -139,7 +139,14 @@ namespace Sufficit.Asterisk.FastAGI
         public static string? GetData(this AGIChannel source, string? file = null, int? timeout = null, int? maxDigits = null, uint? readtime = 60000)
 		{
 			var lastReply = source.SendCommand(new GetDataCommand(file, timeout, maxDigits) { ReadTimeOut = readtime });
-            return lastReply.GetResult();
+            var result = lastReply.GetResult();
+
+            if (string.Equals(lastReply.Extra, "timeout", StringComparison.OrdinalIgnoreCase))
+                return string.IsNullOrWhiteSpace(result) || result == "0"
+                    ? "(timeout)"
+                    : $"{result}(timeout)";
+
+            return result;
 		}
 
         #endregion
