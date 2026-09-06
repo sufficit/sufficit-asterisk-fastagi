@@ -3,3 +3,5 @@ obj/
 .vs/
 *.user
 *-local.csproj
+# Worktrees (padrao): arvores de trabalho em <repo>/.worktrees/
+**/.worktrees/
