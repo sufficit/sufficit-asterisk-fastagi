@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup Label="Sufficit Targeting">
@@ -113,4 +113,9 @@
 		<PackageReference Include="Sufficit.Asterisk.Shared" Version="1.*" Condition="!Exists('..\\..\\sufficit-asterisk-shared\\src\\Sufficit.Asterisk.Shared.csproj') "/>
 	</ItemGroup>
 
+<ItemGroup>
+    <!-- AGI channel helpers use Core types directly. -->
+    <ProjectReference Include="../../sufficit-asterisk-core/src/Sufficit.Asterisk.Core.csproj" Condition="Exists('../../sufficit-asterisk-core/src/Sufficit.Asterisk.Core.csproj')" />
+    <PackageReference Include="Sufficit.Asterisk.Core" Version="1.*" Condition="!Exists('../../sufficit-asterisk-core/src/Sufficit.Asterisk.Core.csproj')" />
+  </ItemGroup>
 </Project>
